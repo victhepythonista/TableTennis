@@ -1,0 +1,205 @@
+
+Manager:
+    id:manager
+    Interface:
+        name:'interface'
+        id:interface
+        Label:
+            canvas.before:
+                
+                Rectangle:
+                    size:self.size
+                    pos:self.pos
+                    source:'images/background1.jpeg'
+        Label:
+            text:' TABLE\nTENNIS'
+            size_hint:1,.1
+            pos_hint:{'x':0 , 'y':.9}
+            font_size:30
+            color:1,1,0,1
+        Button:
+            pos_hint:{'y':.7}            
+            text:'vs FRIEND'
+            
+            
+            on_press:
+                app.root.current = 'main_game'
+                main_game.start_first_time()
+        Button:
+            pos_hint:{'y':.5}
+            text:'vs CPU'
+            on_press:
+                app.root.current = 'computer'
+                #computer.start_vs_computer()
+       
+        Button:
+            text:'Q U I T'
+            pos_hint:{'y':.1}
+        
+                
+    Main_game:
+        game:game
+        name:'main_game'
+        id:main_game
+        Game:
+            id:game
+            
+    Computer:
+        vs_computer:vs_computer
+        id:computer
+        name:'computer'
+        Computer_table:
+            id:vs_computer
+            
+   
+
+                
+
+                
+            
+        
+
+
+
+<Ball>:
+    factor:self.parent.height/self.parent.width
+    hd:.05
+    
+    size:self.hd*self.parent.width*self.factor , self.hd*self.parent.height
+    canvas:
+        Color:
+            rgba:1,1,0,1
+        Ellipse:
+            pos:self.pos
+            size:self.size
+
+<Paddle>:
+    id:p
+    size:self.parent.width*.2 , self.parent.height*.05
+    #size:self.parent.width , self.parent.width*.05
+    
+    #color:[tuple(0,.3,.8,.5)]
+    canvas:
+        
+        Color:
+            
+            rgba:self.collide_color if self.hit == True else  self.normal_color
+        Rectangle:
+            pos:self.pos
+            size:self.size
+
+<Game>:
+    id:game
+    ball:ball
+    pad1:pad1
+    pad2:pad2
+    size_hint:1,1
+    canvas:
+        Rectangle:
+            size:self.size
+            pos:self.pos
+            source:'images/skyblue_table.jpeg'
+    Label:
+        size:self.parent.width , self.parent.height/1000
+        y:self.parent.height/2-2
+        x:0
+        canvas.before:
+            Color:
+                rgba:1,1,1,1
+            Rectangle:
+                size:self.size
+                pos:self.pos
+    Label:
+        id:score2
+        color:score1.color
+        pos:game.width/3  , 8/10*game.height 
+        text:'player2 :' + str(pad2.score)
+        size_hint:.01 , .01
+    Label:
+        id:score1
+        color:1,1,1,1
+        pos:game.width/3  ,1/10* game.height
+        text:'player 1 :'  + str(pad1.score)
+        size_hint:.01 , .01
+        
+    Ball:
+        id:ball
+        center:self.parent.center
+    Paddle:
+        id:pad1
+        
+        center_x : root.center_x
+        x:root.x
+       
+    Paddle:
+        id:pad2
+        center_x:root.center_x
+        y:root.height - self.height
+        #size:300,20
+
+
+        
+##    computer table
+<Computer_table>:
+    background_table:'images/skyblue_table.jpeg'
+    ball:ball
+    id:vs_computer
+    computer_paddle:pad2
+    pad1:pad1
+    size_hint:1,1
+    canvas:
+        Rectangle:
+            size:self.size
+            pos:self.pos
+            source:self.background_table
+    
+    Label:
+        id:score2
+        color:score1.color
+        pos:vs_computer.width/3  , 8/10*vs_computer.height 
+        text:'Vics AI :' + str(pad2.score)
+        size_hint:.01 , .01
+    Label:
+        id:score1
+        color:1,1,1,1
+        pos:vs_computer.width/3  ,1/10* vs_computer.height
+        text:'Vic :'  + str(pad1.score)
+        size_hint:.01 , .01
+    Label:
+        text: '' if self.parent.waiting_for_start == False else 'TOUCH TO START'
+        pos:vs_computer.width/4  , vs_computer.height/2
+        color:0,1,0,1
+    Label:
+        text: '' if self.parent.game_paused is False else 'GAME PAUSED'
+        pos:vs_computer.width/4  , vs_computer.height/2
+        color:0,1,0,1
+    Ball:
+        id:ball
+        center:self.parent.center
+    Paddle:
+        id:pad1
+        size_hint:0.1, 0.01
+        center_x : root.center_x
+        x:root.x
+        
+       
+    Paddle:
+        size_hint:0.1, 0.01
+        id:pad2
+        center_x:root.center_x
+        y:root.height - self.height
+        #size:300,20
+
+
+
+<Button@Interface>:
+    size_hint:1,.1
+    pos_hint:{'x':'0'}
+    
+    background_color:.1,1,1,.5
+    color:0,0,0,1
+
+<Button@Table_selection>:
+    on_press:
+        
+       

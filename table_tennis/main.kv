@@ -1,0 +1,58 @@
+Manager:
+    Table:
+
+        ball:ball
+        id:table
+        name:'table'
+
+        
+        Ball:
+            id:ball
+            pos:root.center
+        Paddle1:
+        Paddle2:
+            pos:40,650
+
+
+<Container>:
+    size:300,700
+<Paddle1>:
+   
+    id:pad1
+    bat_color:.3,.2,.3,1
+    color:1,.2,1,1
+    bat_color:.2,.3,.1,.4
+    #pos_hint:{'x':.1,'y':.09}
+    pos:40,100
+    size_hint:.3,.03
+    
+
+    canvas:
+        Color:
+            id:bat1
+            rgba:self.bat_color
+        Rectangle:
+            pos:self.pos
+            size:self.size
+<Paddle2>:
+    id:pad2
+    
+    
+    canvas:
+        Color:
+            
+            rgba:.1,.6,.5,1
+        Rectangle:
+            pos:self.pos
+            size:self.size
+    
+
+<Ball>:
+    size_hint:.16,0.07
+
+    canvas:
+        Ellipse:
+            pos:self.pos
+            size:self.size
+            Color:
+                rgba:.1,.2,.1,1
